@@ -14,6 +14,7 @@ public class Register extends JFrame {
     private JButton signUpButton;
     PreparedStatement ps;
 
+    //Constructor de la clase register
     public Register() {
         signUpButton.addActionListener(new ActionListener() {
             @Override
@@ -21,27 +22,27 @@ public class Register extends JFrame {
                 Insert();
             }
         });
+        setLocationRelativeTo(null);
+        setContentPane(panel1);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Para solo cerrar esta ventana
+        setVisible(true);
+        pack();
     }
 
-
-    public static void main(String[] args) {
-        Register r = new Register();
-        r.setContentPane(r.panel1);
-        r.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        r.setVisible(true);
-        r.pack();
-    }
-
+    //Metodo para insertar nuevos usuarios en la base de datos
     private void Insert(){
+        //Usando singleton para utilizar la misma instancia
         try(Connection c = ConexionBD.getInstance().getConnection()){
+            //Sentencia para enviar a la base de datos
             ps = c.prepareStatement("INSERT INTO register (name, lastname, username, password) VALUES (?,?,?,?)");
+            //Capturando parametros
             ps.setString(1, Name.getText());
             ps.setString(2, LastName.getText());
             ps.setString(3, UserName.getText());
             ps.setString(4, new String(Password.getPassword()));
 
             int rowsAffected = ps.executeUpdate();
-
+            //Verificacion de filas afectadas en la base de datos
             if(rowsAffected > 0){
                 JOptionPane.showMessageDialog(null, "Nuevo usuario registrado");
             }else{
@@ -51,6 +52,8 @@ public class Register extends JFrame {
             throw new RuntimeException(ex.getMessage());
         }
     }
+
+    //Metodo para invocar componentes de la UI personalizados
     private void createUIComponents() {
         // TODO: place custom component creation code here
         panel1 = new JPanel();
