@@ -10,7 +10,7 @@ public class Register extends JFrame {
     private JPanel panel1;
     private JTextField LastName;
     private JTextField UserName;
-    private JTextField Password;
+    private JPasswordField Password;
     private JButton signUpButton;
     PreparedStatement ps;
 
@@ -34,12 +34,12 @@ public class Register extends JFrame {
 
     private void Insert(){
         try(Connection c = ConexionBD.getInstance().getConnection()){
-            ps = c.prepareStatement("INSERT INTO register VALUES (?,?,?,?,?)");
-            ps.setInt(1,1);
-            ps.setString(2, Name.getText());
-            ps.setString(3, LastName.getText());
-            ps.setString(4, UserName.getText());
-            ps.setString(5, Password.getText());
+            ps = c.prepareStatement("INSERT INTO register (name, lastname, username, password) VALUES (?,?,?,?)");
+            ps.setString(1, Name.getText());
+            ps.setString(2, LastName.getText());
+            ps.setString(3, UserName.getText());
+            ps.setString(4, new String(Password.getPassword()));
+
             int rowsAffected = ps.executeUpdate();
 
             if(rowsAffected > 0){
@@ -48,7 +48,7 @@ public class Register extends JFrame {
                 JOptionPane.showMessageDialog(null, "Error al registrar nuevo usuario ");
             }
         } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            throw new RuntimeException(ex.getMessage());
         }
     }
     private void createUIComponents() {
