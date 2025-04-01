@@ -19,7 +19,9 @@ public class Register extends JFrame {
         signUpButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Insert();
+                if(validateFields()){
+                    Insert();
+                }
             }
         });
         setLocationRelativeTo(null);
@@ -51,6 +53,39 @@ public class Register extends JFrame {
         } catch (SQLException ex) {
             throw new RuntimeException(ex.getMessage());
         }
+    }
+
+    //Metodo para validar campos
+    private boolean validateFields() {
+        String vUser = UserName.getText().trim();
+        String vPassword = new String(Password.getPassword()).trim();
+        String vName = Name.getText().trim();
+        String vLastName = LastName.getText().trim();
+
+        if (vName.isEmpty()) {
+            showMessage("El campo Name es obligatorio");
+            return false;
+        }
+
+        if (vLastName.isEmpty()) {
+            showMessage("El campo Lastname es obligatorio");
+            return false;
+        }
+
+        if (vUser.isEmpty()) {
+            showMessage("El campo Username es obligatorio");
+            return false;
+        }
+
+        if (vPassword.isEmpty()) {
+            showMessage("El campo Password es obligatorio");
+            return false;
+        }
+        return true; //Campos llenos
+    }
+
+    private void showMessage(String message){
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     //Metodo para invocar componentes de la UI personalizados
