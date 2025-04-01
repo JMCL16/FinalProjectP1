@@ -78,6 +78,12 @@ public class Main extends JFrame {
                 updateUser();
             }
         });
+        deleteCli.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteUser();
+            }
+        });
     }
 
     //Metodo para cargar Usuario
@@ -110,6 +116,7 @@ public class Main extends JFrame {
                     "Error",JOptionPane.ERROR_MESSAGE);
         }
 
+        //Capturando los valores de la fila seleccionada
         int id = (int) model.getValueAt(selectedRow, 0);
         String Name = (String) model.getValueAt(selectedRow, 1);
         String LastName = (String) model.getValueAt(selectedRow, 2);
@@ -133,6 +140,37 @@ public class Main extends JFrame {
                 loadUser();
             }else{
                 JOptionPane.showMessageDialog(this, "Error al actualizar usuario ");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Metodo para eliminar usuarios
+    private void deleteUser(){
+        int selectedRow = table1.getSelectedRow();
+        if(selectedRow == -1){
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario para eliminar",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+        }
+
+        //Capturando los valores de la fila seleccionada
+        int id = (int) model.getValueAt(selectedRow, 0);
+        //Confirmando eliminar usaurio
+        int confirm = JOptionPane.showConfirmDialog(this, "Seguro desea eliminar este usuario?",
+                "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm != JOptionPane.YES_OPTION) return;
+
+        try(Connection c = ConexionBD.getInstance()){
+            PreparedStatement ps = c.prepareStatement("DELETE FROM register WHERE id=?");
+            ps.setInt(1, id);
+
+            //Verificacion de filas afectadas en la base de datos
+            if(ps.executeUpdate() > 0){
+                JOptionPane.showMessageDialog(this, "Usuario Eliminado");
+                loadUser();
+            }else{
+                JOptionPane.showMessageDialog(this, "Error al eliminar usuario ");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
