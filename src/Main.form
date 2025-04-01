@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Main">
+  <grid id="27dc6" binding="panel1" default-binding="true" layout-manager="GridLayoutManager" row-count="4" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="504" height="358"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="6f3a4" class="javax.swing.JTable" binding="table1" default-binding="true">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="50"/>
+          </grid>
+        </constraints>
+        <properties>
+          <cellSelectionEnabled value="false"/>
+          <columnSelectionAllowed value="false"/>
+          <editingColumn value="-1"/>
+          <fillsViewportHeight value="false"/>
+          <name value=""/>
+          <toolTipText value=""/>
+          <visible value="true"/>
+        </properties>
+        <clientProperties>
+          <JTable.autoStartsEdit class="java.lang.Boolean" value="false"/>
+        </clientProperties>
+      </component>
+      <component id="54851" class="javax.swing.JButton" binding="updateCli">
+        <constraints>
+          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-11958090"/>
+          <font name="Lucida Sans Typewriter" size="12" style="1"/>
+          <text value="Actualizar"/>
+        </properties>
+      </component>
+      <component id="fdf28" class="javax.swing.JButton" binding="deleteCli">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-11958090"/>
+          <font name="Lucida Sans Typewriter" size="12" style="1"/>
+          <text value="Eliminar"/>
+        </properties>
+      </component>
+      <component id="cd6d2" class="javax.swing.JButton" binding="closeSession">
+        <constraints>
+          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-2993843"/>
+          <font name="Lucida Sans Typewriter" size="12" style="1"/>
+          <text value="Cerrar Sesion"/>
+        </properties>
+      </component>
+      <vspacer id="86695">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="57aba" class="javax.swing.JLabel" binding="titleLabel">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <font name="Courier New" size="12" style="1"/>
+          <text value="Clientes Registrados"/>
+        </properties>
+      </component>
+      <component id="322ff" class="javax.swing.JButton" binding="newCli">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <background color="-11958090"/>
+          <font name="Lucida Sans Typewriter" size="12" style="1"/>
+          <margin top="0" left="0" bottom="0" right="0"/>
+          <text value="Nuevo"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
