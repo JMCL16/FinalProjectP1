@@ -18,6 +18,12 @@ public class Login extends JFrame{
 
     //Constructor para el login
     public Login() {
+        setTitle("Login");
+        setSize(400, 400);
+        setLocationRelativeTo(null);
+        setContentPane(panel1);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
 
         signInButton.addActionListener(new ActionListener() {
             @Override
@@ -55,11 +61,7 @@ public class Login extends JFrame{
     }
 
     public static void main(String[] args) {
-        Login l = new Login();
-        l.setContentPane(l.panel1);
-        l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        l.setVisible(true);
-        l.pack();
+        SwingUtilities.invokeLater(Login::new);
     }
 
     //Metodo para verificar usuario registrado
@@ -83,13 +85,12 @@ public class Login extends JFrame{
         String vPassword = new String(Password.getPassword()).trim();
 
         if (vUser.isEmpty() && vPassword.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Debe ingresar su usuario y contraseña, si no está registrado debe registrarse"
+            JOptionPane.showMessageDialog(null, "Debe ingresar su usuario y contraseña, " +
+                            "si no está registrado debe registrarse"
                     , "Error", JOptionPane.ERROR_MESSAGE);
             dispose();
             return false;
         }
         return true;
     }
-
-
 }
