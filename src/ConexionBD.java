@@ -3,8 +3,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConexionBD {
-    private static ConexionBD instance;
-    Connection con;
+    private static Connection con;
 
     //Constructor privado
     private ConexionBD(){
@@ -18,16 +17,17 @@ public class ConexionBD {
     }
 
     //Patron Singleton para utilizar una misma instancia
-    public static ConexionBD getInstance() {
-        //Verificando si la instancia esta creada o no
-        if (instance == null){
-            instance = new ConexionBD();
-        }
-        return instance;
-    }
-
     //Metodo para utilizar la conexion de la base de datos
-    public Connection getConnection(){
+    public static Connection getInstance() throws SQLException {
+        if (con == null || con.isClosed()) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/Tarea4", "root", "Jefer1605@");
+                System.out.println("Conexión establecida con éxito.");
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException("No se encontró el driver JDBC de MySQL.", e);
+            }
+        }
         return con;
     }
 
