@@ -70,5 +70,27 @@ public class Main extends JFrame {
 
             }
         });
+        loadUser();
+    }
+
+    //Metodo para cargar Usuario
+    private void loadUser(){
+        model.setRowCount(0);
+        try(Connection c = ConexionBD.getInstance()){
+            PreparedStatement ps = c.prepareStatement("SELECT * FROM register");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+                model.addRow(new Object[]{
+                        rs.getString("name"),
+                        rs.getString("lastname"),
+                        rs.getString("email"),
+                        rs.getString("numCel"),
+                        rs.getString("UserName"),
+                });
+            }
+    } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
