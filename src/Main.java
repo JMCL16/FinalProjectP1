@@ -53,8 +53,11 @@ public class Main extends JFrame {
         closeSession.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new Login().setVisible(true);
                 dispose();
+                SwingUtilities.invokeLater(() -> {
+                    Login l = new Login();
+                    l.setVisible(true);
+                });
             }
         });
 
