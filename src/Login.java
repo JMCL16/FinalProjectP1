@@ -33,8 +33,11 @@ public class Login extends JFrame{
                 //Verificando si el user y password son correctos
                 if(verify(user, password)){
                     JOptionPane.showMessageDialog(null, "Inicio Sesion Completado");
+                    new Main().setVisible(true);
+                    dispose();
                 }else{
-                    JOptionPane.showMessageDialog(null, "El username o la password son incorrectas, Intente de nuevo.");
+                    JOptionPane.showMessageDialog(null, "El username o la password son incorrectas," +
+                            " Intente de nuevo.");
                     UserName.setText("");
                     Password.setText("");
                 }
@@ -53,7 +56,7 @@ public class Login extends JFrame{
 
     public static void main(String[] args) {
         Login l = new Login();
-        l.setContentPane(new Login().panel1);
+        l.setContentPane(l.panel1);
         l.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         l.setVisible(true);
         l.pack();
