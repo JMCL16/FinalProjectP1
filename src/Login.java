@@ -25,7 +25,13 @@ public class Login extends JFrame{
                 String user = UserName.getText();
                 String password = new String(Password.getPassword());
 
-                if(Verify(user, password)){
+                //Validando si los campos estan vacios
+                if (!validateFields()){
+                    return;
+                }
+
+                //Verificando si el user y password son correctos
+                if(verify(user, password)){
                     JOptionPane.showMessageDialog(null, "Inicio Sesion Completado");
                 }else{
                     JOptionPane.showMessageDialog(null, "El username o la password son incorrectas, Intente de nuevo.");
@@ -34,6 +40,8 @@ public class Login extends JFrame{
                 }
             }
         });
+
+        //Accion para acceder a registro
         linkLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -52,8 +60,8 @@ public class Login extends JFrame{
     }
 
     //Metodo para verificar usuario registrado
-    private boolean Verify(String user, String password){
-        try(Connection c = ConexionBD.getInstance().getConnection()){
+    private boolean verify(String user, String password){
+        try(Connection c = ConexionBD.getInstance()){
             PreparedStatement ps = c.prepareStatement("SELECT * FROM register WHERE UserName = ? AND password = ?");
             ps.setString(1, user);
             ps.setString(2, password);
@@ -61,10 +69,24 @@ public class Login extends JFrame{
             ResultSet result = ps.executeQuery();// Ejecutando el query
             //si existe un resultado, el usuario es valido
             return result.next();
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    //Metodo para validar campos
+    private boolean validateFields(){
+        String vUser = UserName.getText().trim();
+        String vPassword = new String(Password.getPassword()).trim();
+
+        if (vUser.isEmpty() && vPassword.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Debe ingresar su usuario y contraseña, si no está registrado debe registrarse"
+                    , "Error", JOptionPane.ERROR_MESSAGE);
+            dispose();
+            return false;
+        }
+        return true;
+    }
+
 
 }
