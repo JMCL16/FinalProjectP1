@@ -4,6 +4,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.SelectableChannel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +29,7 @@ public class Main extends JFrame {
         panel1 = new JPanel(new BorderLayout(10,10));
 
         //Creando tabla
-        String[] columnas = {"Nombre", "Apellido", "Correo electrónico", "Teléfono", "Usuario"};
+        String[] columnas = {"Id", "Nombre", "Apellido", "Correo electrónico", "Teléfono", "Usuario"};
         model = new DefaultTableModel(columnas, 0);
         table1 = new JTable(model);
         table1.setModel(model);
@@ -71,6 +72,12 @@ public class Main extends JFrame {
             }
         });
         loadUser();
+        updateCli.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                updateUser();
+            }
+        });
     }
 
     //Metodo para cargar Usuario
@@ -82,6 +89,7 @@ public class Main extends JFrame {
 
             while(rs.next()){
                 model.addRow(new Object[]{
+                        rs.getInt("Id"),
                         rs.getString("name"),
                         rs.getString("lastname"),
                         rs.getString("email"),
@@ -89,7 +97,44 @@ public class Main extends JFrame {
                         rs.getString("UserName"),
                 });
             }
-    } catch (SQLException e) {
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Metodo para actualizar usuarios
+    private void updateUser(){
+        int selectedRow = table1.getSelectedRow();
+        if(selectedRow == -1){
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario para actualizar",
+                    "Error",JOptionPane.ERROR_MESSAGE);
+        }
+
+        int id = (int) model.getValueAt(selectedRow, 0);
+        String Name = (String) model.getValueAt(selectedRow, 1);
+        String LastName = (String) model.getValueAt(selectedRow, 2);
+        String Email = (String) model.getValueAt(selectedRow, 3);
+        String numCel = (String) model.getValueAt(selectedRow, 4);
+        String UserName = (String) model.getValueAt(selectedRow, 5);
+
+        try(Connection c = ConexionBD.getInstance()){
+            PreparedStatement ps = c.prepareStatement("UPDATE register set name=?, lastname=?, email=?, numCel=?, username=? WHERE id=?");
+
+            ps.setString(1, Name);
+            ps.setString(2, LastName);
+            ps.setString(3, Email);
+            ps.setString(4, numCel);
+            ps.setString(5, UserName);
+            ps.setInt(6, id);
+
+            //Verificacion de filas afectadas en la base de datos
+            if(ps.executeUpdate() > 0){
+                JOptionPane.showMessageDialog(this, "Usuario Actualizado");
+                loadUser();
+            }else{
+                JOptionPane.showMessageDialog(this, "Error al actualizar usuario ");
+            }
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
