@@ -34,7 +34,7 @@ public class Register extends JFrame {
     //Metodo para insertar nuevos usuarios en la base de datos
     private void Insert(){
         //Usando singleton para utilizar la misma instancia
-        try(Connection c = ConexionBD.getInstance().getConnection()){
+        try(Connection c = ConexionBD.getInstance()){
             //Sentencia para enviar a la base de datos
             ps = c.prepareStatement("INSERT INTO register (name, lastname, username, password) VALUES (?,?,?,?)");
             //Capturando parametros
