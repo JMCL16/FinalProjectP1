@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -15,6 +17,7 @@ public class Register extends JFrame {
     private JTextField Email;
     private JPasswordField confirmPass;
     private JTextField numCel;
+    private JLabel linkSession;
     PreparedStatement ps;
 
     //Constructor de la clase register
@@ -28,11 +31,20 @@ public class Register extends JFrame {
                 }
             }
         });
+        setTitle("Regsitro");
+        setSize(300, 600);
         setLocationRelativeTo(null);
         setContentPane(panel1);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); //Para solo cerrar esta ventana
         setVisible(true);
         pack();
+        linkSession.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                new Login().setVisible(true);
+                dispose();
+            }
+        });
     }
 
     //Metodo para insertar nuevos usuarios en la base de datos
@@ -40,7 +52,8 @@ public class Register extends JFrame {
         //Usando singleton para utilizar la misma instancia
         try(Connection c = ConexionBD.getInstance()){
             //Sentencia para enviar a la base de datos
-            ps = c.prepareStatement("INSERT INTO register (name, lastname, email, numCel, username, password) VALUES (?,?,?,?,?,?)");
+            ps = c.prepareStatement("INSERT INTO register (name, lastname, email, numCel, username, password)" +
+                    " VALUES (?,?,?,?,?,?)");
             //Capturando parametros
             ps.setString(1, Name.getText());
             ps.setString(2, LastName.getText());
