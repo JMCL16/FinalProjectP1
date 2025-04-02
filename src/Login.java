@@ -51,7 +51,7 @@ public class Login extends JFrame{
         });
 
         //Accion para acceder a registro
-        linkLabel.addMouseListener(new MouseAdapter() {
+         linkLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 new Register().setVisible(true);
